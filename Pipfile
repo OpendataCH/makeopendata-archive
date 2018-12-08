@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 beautifulsoup4 = ">=4.6.0"
 requests = ">=2.18.4"
+python-dateutil = "*"
 
 [requires]
 python_version = "3.7"
