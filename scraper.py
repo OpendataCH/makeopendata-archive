@@ -1,4 +1,5 @@
-import requests
+import re, requests
+
 from bs4 import BeautifulSoup
 import sqlite3
 from dateutil.parser import parse
@@ -11,6 +12,7 @@ BASE_URL = 'https://make.opendata.ch'
 START_PAGE = BASE_URL + '/wiki/event:home'
 FILTER_EVENTS = r'.*\/event:.*'
 FILTER_PROJECTS = r'.*\/project:.*'
+DATESTAMP_REGEXP = re.compile('^2')
 
 fields = [
     'event',
@@ -58,10 +60,7 @@ def run():
 
             event_page = requests.get(url)
             event_soup = BeautifulSoup(event_page.content, 'html.parser')
-            datestamp = event_soup.find('span', { 'id':'dw__pageinfo' }).find('ul').findAll('li')[1].find('span').get_text()
-            datestamp = parse(datestamp)
-            projects = event_soup.select('a[href*="project:"]')
-            print (datestamp)
+            projects = event_soup.select('a[href*="wiki/project:"]')
 
             project_list = []
             for p in projects:
@@ -71,7 +70,21 @@ def run():
                 if not p_url.startswith('http'): p_url = BASE_URL + p_url
                 if not p_url in project_list:
                     project_list.append(p_url)
-                    print (p_name, p_url)
+                    print("Downloading", p_url)
+                    # extract meta
+                    p_page = requests.get(p_url)
+                    p_soup = BeautifulSoup(p_page.content, 'html.parser')
+                    datestamp = p_soup.find('span', { 'title': DATESTAMP_REGEXP })
+                    if datestamp:
+                        datestamp = parse(datestamp.get_text())
+                    else:
+                        datestamp = '?'
+                    content = p_soup.find('div', { 'class': 'dw-content' })
+                    if content is not None:
+                        content = content.prettify()
+                    else:
+                        content = ''
+                    print (p_name, datestamp, len(content))
 
                 c.execute(
                     '''
