@@ -1,0 +1,68 @@
+{
+  "profile": "tabular-data-package",
+  "resources": [
+    {
+      "name": "Projects",
+      "path": "data/dokuwiki-projects.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "event",
+            "type": "string",
+            "description": "Name of the event at which this project was worked on"
+          },
+          {
+            "name": "event_url",
+            "type": "string",
+            "description": "A link to the event wiki page"
+          },
+          {
+            "name": "updated",
+            "type": "date",
+            "format": "%Y-%m-%d %H:%M:%S"
+            "description": "Timestamp of last update to the project"
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "description": "Title of the project page"
+          },
+          {
+            "name": "url",
+            "type": "string",
+            "description": "A link to the project wiki page"
+          },
+          {
+            "name": "text",
+            "type": "string",
+            "description": "Plain text project description"
+          },
+          {
+            "name": "html",
+            "type": "string",
+            "description": "HTML of the project description"
+          },
+        ]
+      }
+    }
+  ],
+  "keywords": [
+    "opendata", "hackathon"
+  ],
+  "name": "makeopendata-archive",
+  "description": "Swiss open data hackathon project archive",
+  "title": "MAKE.opendata.ch project archive",
+  "licenses": [
+    {
+      "title": "CC Attribution-Share Alike 4.0 International",
+      "path": "http://creativecommons.org/licenses/by-sa/4.0/)"
+    }
+  ],
+  "sources": [
+    {
+      "title": "MAKE.Opendata.ch Wiki",
+      "path": "https://make.opendata.ch/wiki"
+    }
+  ]
+}
