@@ -20,6 +20,8 @@ fields = [
     'updated',
     'title',
     'url',
+    'text',
+    'html',
 ]
 
 def run():
@@ -80,11 +82,13 @@ def run():
                     else:
                         datestamp = '?'
                     content = p_soup.find('div', { 'class': 'dw-content' })
+                    text = ''
                     if content is not None:
-                        content = content.prettify()
+                        text = content.get_text()
+                        content = content.encode_contents()
                     else:
                         content = ''
-                    print (p_name, datestamp, len(content))
+                    print (p_name, datestamp, len(text))
 
                 c.execute(
                     '''
@@ -100,6 +104,8 @@ def run():
                         datestamp,
                         p_name,
                         p_url,
+                        text,
+                        content,
                     ]
                 )
 
