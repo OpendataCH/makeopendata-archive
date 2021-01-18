@@ -2,7 +2,7 @@
   "profile": "tabular-data-package",
   "resources": [
     {
-      "name": "Projects",
+      "name": "projects",
       "path": "data/dokuwiki-projects.csv",
       "profile": "tabular-data-resource",
       "schema": {
@@ -20,7 +20,7 @@
           {
             "name": "updated",
             "type": "date",
-            "format": "%Y-%m-%d %H:%M:%S"
+            "format": "%Y-%m-%d %H:%M:%S",
             "description": "Timestamp of last update to the project"
           },
           {
@@ -42,7 +42,10 @@
             "name": "html",
             "type": "string",
             "description": "HTML of the project description"
-          },
+          }
+        ],
+        "missingValues": [
+          "", "?"
         ]
       }
     }
